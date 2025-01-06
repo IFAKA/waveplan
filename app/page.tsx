@@ -1,101 +1,154 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="p-6">
+      <h1 className="text-4xl font-bold mb-6">Life Tracker</h1>
+      <div className="space-y-4">
+        {/* Health Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Health</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/health/fitness" className="text-blue-500 hover:underline">
+                Fitness
+              </Link>
+            </li>
+            <li>
+              <Link href="/health/sleep" className="text-blue-500 hover:underline">
+                Sleep
+              </Link>
+            </li>
+            <li>
+              <Link href="/health/nutrition" className="text-blue-500 hover:underline">
+                Nutrition
+              </Link>
+            </li>
+            <li>
+              <Link href="/health/weight-management" className="text-blue-500 hover:underline">
+                Weight Management
+              </Link>
+            </li>
+          </ul>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Relationships Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Relationships</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/relationships/family" className="text-blue-500 hover:underline">
+                Family
+              </Link>
+            </li>
+            <li>
+              <Link href="/relationships/romantic-relationships" className="text-blue-500 hover:underline">
+                Romantic Relationships
+              </Link>
+            </li>
+            <li>
+              <Link href="/relationships/friendships" className="text-blue-500 hover:underline">
+                Friendships
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Personal Growth Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Personal Growth</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/personal-growth/education" className="text-blue-500 hover:underline">
+                Education
+              </Link>
+            </li>
+            <li>
+              <Link href="/personal-growth/hobbies" className="text-blue-500 hover:underline">
+                Hobbies
+              </Link>
+            </li>
+            <li>
+              <Link href="/personal-growth/self-reflection" className="text-blue-500 hover:underline">
+                Self-reflection
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Career Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Career</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/career/job-performance" className="text-blue-500 hover:underline">
+                Job Performance
+              </Link>
+            </li>
+            <li>
+              <Link href="/career/skills-development" className="text-blue-500 hover:underline">
+                Skills Development
+              </Link>
+            </li>
+            <li>
+              <Link href="/career/networking" className="text-blue-500 hover:underline">
+                Networking
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Finance Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Finance</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/finance/income" className="text-blue-500 hover:underline">
+                Income
+              </Link>
+            </li>
+            <li>
+              <Link href="/finance/expenses" className="text-blue-500 hover:underline">
+                Expenses
+              </Link>
+            </li>
+            <li>
+              <Link href="/finance/investments" className="text-blue-500 hover:underline">
+                Investments
+              </Link>
+            </li>
+            <li>
+              <Link href="/finance/savings-goals" className="text-blue-500 hover:underline">
+                Savings Goals
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Time Management Section */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Time Management</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/time-management/productivity" className="text-blue-500 hover:underline">
+                Productivity
+              </Link>
+            </li>
+            <li>
+              <Link href="/time-management/goal-setting" className="text-blue-500 hover:underline">
+                Goal Setting
+              </Link>
+            </li>
+            <li>
+              <Link href="/time-management/prioritization" className="text-blue-500 hover:underline">
+                Prioritization
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Home;
