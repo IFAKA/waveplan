@@ -1,7 +1,6 @@
+import { motion } from "motion/react";
 import { FC } from "react";
 import { Exercise } from "../types";
-import WeightHistoryChart from "./WeightHistoryChart";
-import { motion } from "motion/react";
 
 interface ExerciseCardProps {
   exercise: Exercise;
@@ -30,8 +29,8 @@ const ExerciseCard: FC<ExerciseCardProps> = ({ exercise, index }) => {
         {exercise.weightHistory.length > 0 ? (
           exercise.weightHistory.map((entry, i) => (
             <span key={i} className="text-gray-600 dark:text-gray-400">
-              {entry.weight} kg on {entry.date}
-              {i < exercise.weightHistory.length - 1 && ", "}
+              {/* {entry.weight} kg on {entry.date}
+              {i < exercise.weightHistory.length - 1 && ", "} */}
             </span>
           ))
         ) : (
@@ -39,7 +38,7 @@ const ExerciseCard: FC<ExerciseCardProps> = ({ exercise, index }) => {
         )}
       </div>
 
-      <WeightHistoryChart weightHistory={exercise.weightHistory} />
+      {/* <WeightHistoryChart weightHistory={exercise.weightHistory} /> */}
     </motion.li>
   );
 };

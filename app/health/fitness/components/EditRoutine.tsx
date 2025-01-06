@@ -6,7 +6,7 @@ interface EditRoutineProps {
   restTime: number;
   routine: Routine;
   selectedDayIndex: number;
-  editRoutine: (dayIndex: number, updatedExercises: any) => void;
+  editRoutine: (dayIndex: number, updatedExercises: Exercise[]) => void;
   addExercise: (exercise: Exercise) => void;
   setRestTime: (newRestTime: number) => void;
   setIsEditing: Dispatch<SetStateAction<boolean>>;

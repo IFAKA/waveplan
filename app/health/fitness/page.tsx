@@ -5,6 +5,7 @@
 import { FC, useState } from "react";
 import { DropdownMenuDemo } from "./components/DropdownMenuDemo";
 import EditRoutine from "./components/EditRoutine";
+import ExerciseList from "./components/ExerciseList";
 import RestDayView from "./components/RestDayView";
 import RestTimer from "./components/RestTimer";
 import StatisticsChart from "./components/StatisticsChart";
@@ -14,9 +15,7 @@ import { useCurrentDay } from "./hooks/useCurrentDay";
 import { useRoutine } from "./hooks/useRoutine";
 import { useRoutineState } from "./hooks/useRoutineState";
 import { useStatistics } from "./hooks/useStatistics";
-import ExerciseList from "./components/ExerciseList";
-import { AnimatePresence } from "motion/react";
-import { DayRoutine, Exercise } from "./types";
+import { Exercise } from "./types";
 
 const Fitness: FC = () => {
   const [showStatistics] = useState<boolean>(false); // Toggle statistics mode
