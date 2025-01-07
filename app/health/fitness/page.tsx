@@ -1,87 +1,100 @@
-// /pages/Fitness.tsx
-
 "use client";
 
 import { FC, useState } from "react";
-import { DropdownMenuDemo } from "./components/DropdownMenuDemo";
 import EditRoutine from "./components/EditRoutine";
 import ExerciseList from "./components/ExerciseList";
 import RestDayView from "./components/RestDayView";
 import RestTimer from "./components/RestTimer";
-import StatisticsChart from "./components/StatisticsChart";
+// import StatisticsChart from "./components/StatisticsChart";
 import { FITNESS_REST_TIME } from "./constants";
 import { defaultRoutine } from "./data";
 import { useCurrentDay } from "./hooks/useCurrentDay";
 import { useRoutine } from "./hooks/useRoutine";
 import { useRoutineState } from "./hooks/useRoutineState";
-import { useStatistics } from "./hooks/useStatistics";
-import { Exercise } from "./types";
+// import { useStatistics } from "./hooks/useStatistics";
+import { isRestDayForRoutine } from "./utils/routineUtils";
 
 const Fitness: FC = () => {
-  const [showStatistics] = useState<boolean>(false); // Toggle statistics mode
-  const [restTime, setRestTime] = useState<number>(FITNESS_REST_TIME);
+  const [viewMode, setViewMode] = useState<
+    "routine" | "statistics" | "editing"
+  >("routine");
+  const [restTime, setRestTime] = useState(FITNESS_REST_TIME);
 
   const { selectedDayIndex } = useCurrentDay();
   const { routine, completeSet, addExerciseBuilder, currentExerciseIndex } =
     useRoutine(defaultRoutine, selectedDayIndex);
-  const { isEditing, setIsEditing, handleEditRoutine } = useRoutineState();
-  const chartData = useStatistics(routine[selectedDayIndex].exercises);
+  const { handleEditRoutine } = useRoutineState();
+  // const chartData = useStatistics(routine.routines[selectedDayIndex].exercises);
 
-  // const days = routine.map((day) => ({ dayOfWeek: day.dayOfWeek, routineName: day.routineName }));
+  const addExercise = ({
+    name,
+    sets,
+    reps,
+  }: {
+    name: string;
+    sets: number;
+    reps: number;
+  }) =>
+    addExerciseBuilder({
+      name,
+      sets,
+      reps,
+    });
 
-  // const toggleStatisticsMode = () => {
-  //     setShowStatistics((prev) => !prev);
-  //     setIsEditing(false);
-  // };
+  const isRestDay = isRestDayForRoutine(routine.routines[selectedDayIndex]);
 
-  // const toggleEditingMode = () => {
-  //     setIsEditing((prev) => !prev);
-  //     setShowStatistics(false);
-  // }
+  const hasMoreExercisesToDo =
+    currentExerciseIndex < routine.routines[selectedDayIndex].exercises.length;
 
-  const isRestDay = routine[selectedDayIndex]?.dayOfWeek === "Sunday";
-
-  const hasMoreExercisesToDo = routine[selectedDayIndex].exercises.some(
-    ({ sets }) => sets > 0
-  );
-
-  const addExercise = (exercise: Exercise) => {
-    addExerciseBuilder(selectedDayIndex, exercise);
-  };
+  // **Handler Functions**
+  const handleRoutineClick = () => setViewMode("routine");
+  const handleStatisticsClick = () => setViewMode("statistics");
+  const handleEditClick = () => setViewMode("editing");
+  const handleExitEditing = () => setViewMode("routine");
 
   return (
     <div className="dark:bg-slate-800 dark:text-white bg-slate-200 rounded-lg min-h-screen flex flex-col justify-between">
-      <header className="flex justify-between items-center bg-white dark:bg-slate-900 shadow p-4">
-        {/* <div className="flex justify-between items-center"> */}
-        <h2 className="text-2xl font-bold">Routine</h2>
-        <DropdownMenuDemo />
-        {/* <DaySelector
-                        selectedDayIndex={selectedDayIndex}
-                        setSelectedDayIndex={setSelectedDayIndex}
-                        days={days}
-                    /> */}
-        {/* </div> */}
+      <header className="flex justify-between items-center bg-white dark:bg-slate-900 shadow">
+        <div className="flex flex-wrap justify-end">
+          <button
+            className={`px-4 py-2 text-lg ${
+              viewMode === "routine"
+                ? "bg-white text-blue-500 font-semibold border-r border-blue-200"
+                : "bg-white text-black"
+            }`}
+            onClick={handleRoutineClick}
+          >
+            Routine
+          </button>
 
-        {/* <div className="flex gap-2 flex-wrap">
-                    <button
-                        className={`bg-blue-500 text-white px-2.5 py-0.5 rounded ${showStatistics ? "bg-slate-600" : ""}`}
-                        onClick={toggleStatisticsMode}
-                    >
-                        View Statistics
-                    </button>
+          <button
+            className={`px-4 py-2 text-lg ${
+              viewMode === "editing"
+                ? "bg-white text-blue-500 font-semibold border-x border-blue-200"
+                : "bg-white text-blue-400"
+            }`}
+            onClick={handleEditClick}
+          >
+            Edit
+          </button>
 
-                    <button
-                        className={`bg-blue-500 text-white px-2.5 py-0.5 rounded ${isEditing ? "bg-slate-600" : ""}`}
-                        onClick={toggleEditingMode}
-                    >
-                        Edit Routine
-                    </button>
-                </div> */}
+          <button
+            className={`px-4 py-2 text-lg ${
+              viewMode === "statistics"
+                ? "bg-white text-blue-500 font-semibold border-l border-blue-200"
+                : "bg-white text-blue-400"
+            }`}
+            onClick={handleStatisticsClick}
+          >
+            Statistics
+          </button>
+        </div>
       </header>
-      <>
-        {showStatistics ? (
-          <StatisticsChart chartData={chartData} />
-        ) : isEditing ? (
+
+      <main className="flex flex-1 flex-col gap-4">
+        {viewMode === "statistics" ? (
+          <>{/* <StatisticsChart chartData={chartData} /> */}</>
+        ) : viewMode === "editing" ? (
           <EditRoutine
             restTime={restTime}
             routine={routine}
@@ -89,27 +102,24 @@ const Fitness: FC = () => {
             editRoutine={handleEditRoutine}
             addExercise={addExercise}
             setRestTime={setRestTime}
-            setIsEditing={setIsEditing}
+            setIsEditing={handleExitEditing} // Using a dedicated function
           />
+        ) : isRestDay ? (
+          <RestDayView />
         ) : (
           <>
-            {isRestDay ? (
-              <RestDayView />
-            ) : (
-              <ExerciseList
-                exercises={routine[selectedDayIndex].exercises}
-                currentExerciseIndex={currentExerciseIndex}
-              />
-            )}
+            <ExerciseList
+              exercises={routine.routines[selectedDayIndex].exercises}
+              currentExerciseIndex={currentExerciseIndex}
+            />
+            <div className="dark:text-black bg-white p-4">
+              {!isRestDay && hasMoreExercisesToDo && (
+                <RestTimer restTime={restTime} onFinish={completeSet} />
+              )}
+            </div>
           </>
         )}
-      </>
-
-      <footer className="dark:text-black bg-white p-4">
-        {!isRestDay && hasMoreExercisesToDo && (
-          <RestTimer restTime={restTime} onFinish={completeSet} />
-        )}
-      </footer>
+      </main>
     </div>
   );
 };
