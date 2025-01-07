@@ -13,20 +13,33 @@ function registerServiceWorker() {
 
           // You can listen for changes to the installing service worker's
           // state via installingWorker.onstatechange
+          installingWorker.onstatechange = () => {
+            console.log(
+              "Service worker state changed to:",
+              installingWorker.state
+            );
+
+            // Check if the service worker is installed
+            if (installingWorker.state === "installed") {
+              if (navigator.serviceWorker.controller) {
+                console.log(
+                  "New content is available, and the service worker is installed."
+                );
+              } else {
+                console.log("Content is cached for offline use.");
+              }
+            }
+          };
         });
         console.log("Service Worker registration successful:", registration);
       });
 
       navigator.serviceWorker.ready
         .then((registration) => {
-          registration.active.postMessage({ hello: "world" });
-          return registration.pushManager.getSubscription();
+          console.log("Service Worker is ready:", registration);
         })
-        .then(function (subscription) {
-          if (!subscription) {
-            return;
-          }
-          navigator.serviceWorker.controller.postMessage({ hello: "world" });
+        .catch((error) => {
+          console.error("Service Worker is not ready:", error);
         });
     }
   }
